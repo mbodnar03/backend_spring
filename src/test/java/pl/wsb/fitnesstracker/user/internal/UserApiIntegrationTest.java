@@ -63,15 +63,15 @@ class UserApiIntegrationTest extends IntegrationTestBase {
         User user1 = existingUser(generateUser());
         User user2 = existingUser(generateUser());
 
-        mockMvc.perform(get("/v1/users/simple").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/users/short").contentType(MediaType.APPLICATION_JSON))
                 .andDo(log())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].firstName").value(user1.getFirstName()))
-                .andExpect(jsonPath("$[0].lastName").value(user1.getLastName()))
+                .andExpect(jsonPath("$[0].id").value(user1.getId().intValue()))
+                .andExpect(jsonPath("$[0].email").value(user1.getEmail()))
 
-                .andExpect(jsonPath("$[1].firstName").value(user2.getFirstName()))
-                .andExpect(jsonPath("$[1].lastName").value(user2.getLastName()))
+                .andExpect(jsonPath("$[1].id").value(user2.getId().intValue()))
+                .andExpect(jsonPath("$[1].email").value(user2.getEmail()))
 
                 .andExpect(jsonPath("$[2]").doesNotExist());
     }

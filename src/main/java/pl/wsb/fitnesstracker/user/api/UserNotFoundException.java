@@ -16,4 +16,5 @@ public class UserNotFoundException extends NotFoundException {
         this("User with ID=%s was not found".formatted(id));
     }
 
+
 }
