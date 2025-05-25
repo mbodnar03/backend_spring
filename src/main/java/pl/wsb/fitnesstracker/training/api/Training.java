@@ -2,9 +2,7 @@ package pl.wsb.fitnesstracker.training.api;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
 import pl.wsb.fitnesstracker.user.api.User;
 
@@ -48,6 +46,17 @@ public class Training {
             final ActivityType activityType,
             final double distance,
             final double averageSpeed) {
+        this.user = user;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.activityType = activityType;
+        this.distance = distance;
+        this.averageSpeed = averageSpeed;
+    }
+
+    public Training(Long id, User user, Date startTime, Date endTime,
+                    ActivityType activityType, double distance, double averageSpeed) {
+        this.id = id;
         this.user = user;
         this.startTime = startTime;
         this.endTime = endTime;

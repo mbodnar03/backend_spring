@@ -3,8 +3,10 @@ package pl.wsb.fitnesstracker.user.internal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserShortDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -75,5 +77,19 @@ class UserController {
     ) {
         var updated = userService.partiallyUpdateUser(id, updates);
         return userMapper.toDto(updated);
+    }
+
+    @GetMapping("/email")
+    public List<UserShortDto> getByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email)
+                .map(user -> List.of(new UserShortDto(user.getId(), user.getEmail())))
+                .orElse(List.of());
+    }
+
+    @GetMapping("/older/{date}")
+    public List<User> getOlderThanDate(@PathVariable LocalDate date) {
+        return userService.findAllUsers().stream()
+                .filter(user -> user.getBirthdate().isBefore(date))
+                .toList();
     }
 }
